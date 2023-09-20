@@ -27,6 +27,7 @@ static void set_test_file(struct worker *worker, char *test_root)
         sprintf(test_root, "%s/n_shblk_rd.dat", fx_opt->root);
 }
 
+#define PAYGO_FADV_HOTSECT 8
 static int pre_work(struct worker *worker)
 {
         struct bench *bench = worker->bench;
@@ -60,6 +61,7 @@ static int pre_work(struct worker *worker)
 
         if (write(fd, page, PAGE_SIZE) != PAGE_SIZE)
                 goto err_out;
+	posix_fadvise(fd, 0, PAGE_SIZE, PAYGO_FADV_HOTSECT);
 
         fsync(fd);
         close(fd);

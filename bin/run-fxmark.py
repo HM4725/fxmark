@@ -26,7 +26,7 @@ class Runner(object):
     # media path
     LOOPDEV = "/dev/loopX"
     NVMEDEV = "/dev/nvme0n1pX"
-    HDDDEV  = "/dev/sdX"
+    HDDDEV  = "/dev/vdb"
     SSDDEV  = "/dev/sdY"
 
     # test core granularity
@@ -45,8 +45,8 @@ class Runner(object):
         self.DEBUG_OUT     = False
 
         # bench config
-        self.DISK_SIZE     = "32G"
-        self.DURATION      = 30 # seconds
+        self.DISK_SIZE     = "10G"
+        self.DURATION      = 5 # seconds
         self.DIRECTIOS     = ["bufferedio", "directio"]  # enable directio except tmpfs -> nodirectio 
         self.MEDIA_TYPES   = ["ssd", "hdd", "nvme", "mem"]
 #        self.FS_TYPES      = [
@@ -517,7 +517,7 @@ if __name__ == "__main__":
     run_config = [
         (Runner.CORE_FINE_GRAIN,
          PerfMon.LEVEL_LOW,
-         ("mem", "*", "DWOL", "80", "directio")),
+         ("hdd", "ext4", "DRBH", "*", "bufferedio")),
         # ("mem", "tmpfs", "filebench_varmail", "32", "directio")),
         # (Runner.CORE_COARSE_GRAIN,
         #  PerfMon.LEVEL_PERF_RECORD,
